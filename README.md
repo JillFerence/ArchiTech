@@ -195,6 +195,6 @@ MIT License
 
 
 ## Authors
-Jung, Seolin ([@seolinjung](https://github.com/seolinjung))
-Ference, Jill ([@JillFerence](https://github.com/JillFerence))
-Sengkeo, Puthypor ([@Puthyporsk](https://github.com/Puthyporsk))
+- Jung, Seolin ([@seolinjung](https://github.com/seolinjung))
+- Ference, Jill ([@JillFerence](https://github.com/JillFerence))
+- Sengkeo, Puthypor ([@Puthyporsk](https://github.com/Puthyporsk))
