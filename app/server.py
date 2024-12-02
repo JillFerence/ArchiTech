@@ -9,6 +9,15 @@ from starlette.middleware.cors import CORSMiddleware
 from starlette.responses import HTMLResponse, JSONResponse
 from starlette.staticfiles import StaticFiles
 
+import nbformat
+from nbconvert import PythonExporter
+import base64
+
+import import_ipynb
+
+from gradcam import *
+import torch
+
 export_file_url = 'https://drive.google.com/uc?export=download&id=1J-xTZrMoE5Jfq90-OT2W3NsbzZvSrSLZ'
 export_file_name = 'export.pkl'
 
@@ -56,7 +65,7 @@ async def download_file(url, dest):
 async def setup_learner():
     await download_file(export_file_url, path / export_file_name)
     try:
-        # learn = load_learner(path, export_file_name)
+        #learn = load_learner(path, export_file_name)
         learn = load_learner(path/'export.pkl')
         return learn
     except RuntimeError as e:
@@ -87,6 +96,59 @@ async def analyze(request):
     img = PILImage.create(BytesIO(img_bytes))
     prediction = learn.predict(img)[0]
     return JSONResponse({'result': str(prediction)})
+
+
+@app.route('/detect', methods=['POST'])
+async def detect(request):
+    
+    path = os.getcwd()
+    '''
+    print("Current working directory:", os.getcwd())
+    notebook_path = os.path.join(path, 'src', 'architectural-style-recognition')
+    print("path:", notebook_path)
+    notebook = import_ipynb.import_module(notebook_path)
+    
+    #load_image = notebook_namespace['load_image_not_path']
+    #GradCAM = notebook_namespace['GradCAM']
+    #overlay_heatmap = notebook_namespace['overlay_heatmap_not_path']
+    '''
+    
+    print("IMAGE")
+    img_data = await request.form()
+    img_bytes = await (img_data['file'].read())
+    img = PILImage.create(BytesIO(img_bytes))
+    #prediction = learn.predict(img)[0]
+
+    print("MODEL")
+    model = models.resnet152(pretrained=False)
+    model_path = os.path.join(path, 'app', 'models', 'stage-2-resnet152.pth')
+    print("path:", model_path)
+    model.load_state_dict(torch.load(model_path, map_location=torch.device('cpu')), strict=False)
+    model.eval()
+
+    print("LOAD")
+    print(img.shape)
+    img = load_image_not_path(img)
+
+    print("PREDICT")
+    output = model(img)
+    _, pred_class = output.max(dim=1)
+    pred_class = pred_class.item()
+    
+    # Apply Grad-CAM
+    print("GRADCAM")
+    target_layer = model.layer4[2].conv3 
+    grad_cam = GradCAM(model, target_layer)
+    heatmap = grad_cam(img, pred_class)
+
+    print("HEATMAP")
+    overlayed_img = overlay_heatmap_not_path(heatmap, img)
+
+    buffered = BytesIO()
+    overlayed_img.save(buffered, format="PNG")
+    img_str = base64.b64encode(buffered.getvalue()).decode('utf-8')
+
+    return JSONResponse({'result': img_str})
 
 
 if __name__ == '__main__':

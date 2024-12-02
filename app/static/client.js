@@ -16,8 +16,10 @@ function showPicked(input) {
 
 function analyze() {
   var uploadFiles = el("file-input").files;
-  if (uploadFiles.length !== 1) alert("Please select a file to analyze!");
-
+  if (uploadFiles.length !== 1) {
+    alert("Please select a file to analyze!"); 
+    return;
+  }
   el("analyze-button").innerHTML = "Analyzing...";
   var xhr = new XMLHttpRequest();
   var loc = window.location;
@@ -38,4 +40,29 @@ function analyze() {
   fileData.append("file", uploadFiles[0]);
   xhr.send(fileData);
 }
+
+function detect() {
+    var uploadFiles = el("file-input").files;
+    if (uploadFiles.length !== 1) alert("Please select a file to classify and then detect!");
+
+    el("detect-button").innerHTML = "Detecting...";
+    var xhr = new XMLHttpRequest();
+    var loc = window.location;
+    xhr.open("POST", `${loc.protocol}//${loc.hostname}:${loc.port}/detect`,
+      true);
+    xhr.onerror = function() {
+      alert(xhr.responseText);
+    };
+    xhr.onload = function(e) {
+      if (this.readyState === 4) {
+        var response = JSON.parse(e.target.responseText);
+        el("result-label-detect").innerHTML = `Result = ${response["result"]}`;
+      }
+      el("detect-button").innerHTML = "Detect";
+    };
+  
+    var fileData = new FormData();
+    fileData.append("file", uploadFiles[0]);
+    xhr.send(fileData);
+ }
 
