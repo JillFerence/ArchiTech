@@ -1,1 +1,4 @@
-app/export.pkl
+app/models/*.pkl
+src/kaggle.json
+src/architecture/*
+!src/architecture/*.txt

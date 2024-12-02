@@ -1,7 +1,5 @@
 # ArchiTech
-# ArchitecturalStyle Recognition
-
-**ArchitecturalStyle Recognition** is a image classifier of 25 different architectural styles, using deep learning.
+**ArchiTech** is a grad-CAM based architectural style classification model. 
 
 Made with [fastai](https://www.fast.ai) library.
 Source code on [src](./src/architectural-style-recognition.ipynb). It can be runned in [Google Colab](colab.research.google.com)
@@ -11,20 +9,56 @@ Source code on [src](./src/architectural-style-recognition.ipynb). It can be run
 
 
 ## Table of content
-* [Dataset](#dataset)
-* [Training](#training)
-* [Results](#results)
-* [Demonstration](#demonstration)
-* [Run the app locally](#run-the-app-locally)
-* [License](#license)
-* [Links](#links)
+- [ArchiTech](#architech)
+  - [Table of content](#table-of-content)
+  - [Dataset](#dataset)
+      - [Data augmentation](#data-augmentation)
+  - [Training](#training)
+      - [Training vs Test sets](#training-vs-test-sets)
+  - [Results](#results)
+  - [Demonstration](#demonstration)
+  - [Deployment](#deployment)
+    - [Run the app locally](#run-the-app-locally)
+  - [License](#license)
+  - [Links](#links)
+  - [Authors](#authors)
 
 
 
 ## Dataset
 
-The dataset contains 10113 images from 25 architectural styles.
-It is a mixed between images scraped from Google Images and the dataset from the paper "Architectural Style Classification using Multinomial Latent Logistic Regression" (ECCV2014), made by Zhe Xu.
+The dataset consists of two main components.  
+
+The first is 4720 images across 20 styles sourced entirely from Wikimedia Commons with their API.  
+
+<details><summary><b>Number of images for each style</b></summary>
+
+- Amazigh architecture: 155
+- Architecture of Edo Period: 303
+- Architecture of the Joseon Dynasty: 255
+- Architecture of the Qing Dynasty: 293
+- Balinese architecture: 172
+- Brutalist architecture: 256
+- Buddhist architecture: 220
+- Dravidian architecture: 241
+- Hausa architecture: 217
+- Jain architecture: 107
+- Khmer architecture: 257
+- Maya architecture: 337
+- Minangkabau architecture: 315
+- Moorish architecture: 218
+- Mughal architecture: 262
+- Ottoman architecture: 324
+- Pueblo architecture: 68
+- Safavid architecture: 344
+- Stalinist architecture: 212
+- Swahili architecture: 152
+</details>
+
+The latter part is 10113 images across 25 styles and authored by:
+
+- Danci, Marian Dumitru (@dumitrux)
+- Xu, Zhe & Zhang, Ya & Tao, Dacheng & Wu, Junjie & Tsoi, Ah. (2014). Architectural Style Classification Using Multinomial Latent Logistic Regression. 10.1007/978-3-319-10590-1_39.  
 
 <details><summary><b>Number of images for each style</b></summary>
 
@@ -56,12 +90,11 @@ It is a mixed between images scraped from Google Images and the dataset from the
 </details>
 
 
-
 The original dataset was made by Zhe Xu.
 According to the paper, the best accuracy they could get in 2014 was nearly 70% accuracy.
 [Paper "Architectural Style Classification using Multinomial Latent Logistic Regression" (ECCV2014)](http://vigir.missouri.edu/~gdesouza/Research/Conference_CDs/ECCV_2014/papers/8689/86890600.pdf)
 
-
+- [Final Extended dataset](https://www.kaggle.com/datasets/jungseolin/international-architectural-styles-combined)
 - [Extended dataset](https://www.kaggle.com/dumitrux/architectural-styles-dataset)
 - [Original dataset](https://www.kaggle.com/wwymak/architecture-dataset)
 
@@ -161,5 +194,7 @@ MIT License
 
 
 
-## Author
-Danci, Marian Dumitru ([@dumitrux](https://github.com/dumitrux))
+## Authors
+- Jung, Seolin ([@seolinjung](https://github.com/seolinjung))
+- Ference, Jill ([@JillFerence](https://github.com/JillFerence))
+- Sengkeo, Puthypor ([@Puthyporsk](https://github.com/Puthyporsk))
