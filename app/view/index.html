@@ -7,37 +7,58 @@
     <body>
         <div>
             <div class='center'>
-                <div class='title'>Classify Architecture Images &#127970;</div>
+                <div class='title'>ArchiTech: Architectural Style Recognition and Feature Detection </div>
+                <img id='logo' alt='ArchiTech Logo' src='/static/logo.png' height='150'>
                 <div id='list'>
                     <p>Use images of the following list:</p>
                     <details>
-                        <summary>Architecture styles</summary>
+                        <summary>Architecture Styles</summary>
                         <ul>
-                            <li>American craftsman</li>
-                            <li>Bauhaus</li>
-                            <li>Palladian</li>
-                            <li>Deconstructivism</li>
-                            <li>Georgian</li>
-                            <li>Romanesque</li>
-                            <li>Greek Revival</li>
-                            <li>American Foursquare</li>
-                            <li>Byzantine</li>
-                            <li>Postmodern</li>
-                            <li>Art Nouveau</li>
-                            <li>Art Deco</li>
-                            <li>Russian Revival</li>
-                            <li>Edwardian</li>
                             <li>Achaemenid</li>
-                            <li>Novelty</li>
-                            <li>Baroque</li>
-                            <li>Colonial</li>
+                            <li>Amazigh</li>
+                            <li>American Craftsman</li>
+                            <li>American Foursquare</li>
                             <li>Ancient Egyptian</li>
-                            <li>Tudor Revival</li>
-                            <li>Queen Anne</li>
-                            <li>Chicago school</li>
-                            <li>Gothic</li>
-                            <li>International</li>
+                            <li>Art Deco</li>
+                            <li>Art Nouveau</li>
+                            <li>Balinese</li>
+                            <li>Baroque</li>
+                            <li>Bauhaus</li>
                             <li>Beaux-Arts</li>
+                            <li>Brutalist</li>
+                            <li>Buddhist</li>
+                            <li>Byzantine</li>
+                            <li>Chicago School</li>
+                            <li>Colonial</li>
+                            <li>Deconstructivism</li>
+                            <li>Dravidian</li>
+                            <li>Edo Period</li>
+                            <li>Edwardian</li>
+                            <li>Georgian</li>
+                            <li>Gothic</li>
+                            <li>Greek Revival</li>
+                            <li>Hausa</li>
+                            <li>International</li>
+                            <li>Jain</li>
+                            <li>Joseon Dynasty</li>
+                            <li>Khmer</li>
+                            <li>Maya</li>
+                            <li>Minangkabau</li>
+                            <li>Moorish</li>
+                            <li>Mughal</li>
+                            <li>Novelty</li>
+                            <li>Ottoman</li>
+                            <li>Palladian</li>
+                            <li>Postmodern</li>
+                            <li>Pueblo</li>
+                            <li>Qing Dynasty</li>
+                            <li>Queen Anne</li>
+                            <li>Romanesque</li>
+                            <li>Russian Revival</li>
+                            <li>Safavid</li>
+                            <li>Stalinist</li>
+                            <li>Swahili</li>
+                            <li>Tudor Revival</li>
                         </ul>
                     </details>
                 </div>
@@ -62,6 +83,12 @@
                     </div>
                     <div class='analyze'>
                         <button id='analyze-button' class='analyze-button' type='button' onclick='analyze()'>Analyze</button>
+                    </div>
+                    <div class='result-label'>
+                        <label id='result-label-detect'></label>
+                    </div>
+                    <div class='detect'>
+                        <button id='detect-button' class='detect-button' type='button' onclick='detect()'>Detect</button>
                     </div>
                 </div>
             </div>

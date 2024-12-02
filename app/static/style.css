@@ -1,9 +1,10 @@
 * {
-    font-family: Georgia, Times, "Times New Roman", serif;
+    font-family: 'Roboto', sans-serif;
+    color: rgb(254,254,254);
 }
 
 body {
-    background-color: #fff;
+    background-color: rgb(4,27,38);
 }
 
 .no-display {
@@ -21,7 +22,7 @@ body {
     font-size: 36px;
     margin-top: 1em;
     margin-bottom: 1em;
-    color: #262626;
+    color: rgb(254,254,254);
 }
 
 .content {
@@ -34,7 +35,7 @@ body {
 
 .upload-label {
     padding: 10px;
-    font-size: 16px;
+    font-size: 15px;
 }
 
 .result-label {
@@ -47,19 +48,29 @@ body {
 button.choose-file-button {
     width: 220px;
     height: 50px;
-    border-radius: 4px;
-    background-color: #ffffff;
-    border: solid 1px #7052CB;
+    border: solid 1px rgb(140,178,93);
+    border-radius: 10px;
+    background-color: rgb(140,178,93);
     font-size: 20px;
-    color: #7052CB;
+    color: #ffffff;
 }
 
 button.analyze-button {
     width: 220px;
     height: 50px;
-    border: solid 1px #7052CB;
-    border-radius: 4px;
-    background-color: #7052CB;
+    border: solid 1px rgb(89,178,199);
+    border-radius: 10px;
+    background-color: rgb(89,178,199);
+    font-size: 20px;
+    color: #ffffff;
+}
+
+button.detect-button {
+    width: 220px;
+    height: 50px;
+    border-radius: 10px;
+    background-color: rgb(254,145,43);
+    border: solid 1px rgb(254,145,43);
     font-size: 20px;
     color: #ffffff;
 }
