@@ -65,16 +65,6 @@ button.analyze-button {
     color: #ffffff;
 }
 
-button.detect-button {
-    width: 220px;
-    height: 50px;
-    border-radius: 10px;
-    background-color: rgb(254,145,43);
-    border: solid 1px rgb(254,145,43);
-    font-size: 20px;
-    color: #ffffff;
-}
-
 button:focus {
     outline: 0;
 }
