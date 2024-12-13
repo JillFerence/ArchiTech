@@ -9,6 +9,9 @@ from starlette.middleware.cors import CORSMiddleware
 from starlette.responses import HTMLResponse, JSONResponse
 from starlette.staticfiles import StaticFiles
 
+import base64
+from gradcam import *
+
 path = Path(__file__).parent
 
 app = Starlette()
@@ -52,11 +55,42 @@ async def homepage(request):
 
 @app.route('/analyze', methods=['POST'])
 async def analyze(request):
+
+    # LOAD INPUT IMAGE
     img_data = await request.form()
     img_bytes = await (img_data['file'].read())
     img = PILImage.create(BytesIO(img_bytes))
     prediction = learn.predict(img)[0]
-    return JSONResponse({'result': str(prediction)})
+
+    # LOAD MODEL
+    path = os.getcwd()
+    model = models.resnet152(pretrained=False)
+    model_path = os.path.join(path, 'app', 'models', 'stage-2-resnet152.pth')
+    model.load_state_dict(torch.load(model_path, map_location=torch.device('cpu')), strict=False)
+    model.eval()
+
+    # UPDATE IMAGE FORMAT
+    img = load_image_not_path(img)
+
+    # PREDICT
+    output = model(img)
+    _, pred_class = output.max(dim=1)
+    pred_class = pred_class.item()
+
+    # GRADCAM
+    target_layer = model.layer4[2].conv3 
+    grad_cam = GradCAM(model, target_layer)
+    heatmap = grad_cam(img, pred_class)
+
+    # HEATMAP
+    overlayed_img = overlay_heatmap_not_path(heatmap, img)
+    overlayed_img_pil = Image.fromarray(overlayed_img)
+
+    buffer = BytesIO()
+    overlayed_img_pil.save(buffer, format="JPEG") 
+    img_base64 = base64.b64encode(buffer.getvalue()).decode('utf-8')
+
+    return JSONResponse({'result': str(prediction), 'image_data': img_base64})
 
 
 if __name__ == '__main__':
