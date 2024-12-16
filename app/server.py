@@ -46,6 +46,9 @@ tasks = [asyncio.ensure_future(setup_learner())]
 learn = loop.run_until_complete(asyncio.gather(*tasks))[0]
 loop.close()
 
+# LOAD MODEL
+model = learn.model
+model.eval()
 
 @app.route('/')
 async def homepage(request):
@@ -60,32 +63,36 @@ async def analyze(request):
     img_data = await request.form()
     img_bytes = await (img_data['file'].read())
     img = PILImage.create(BytesIO(img_bytes))
-    prediction = learn.predict(img)[0]
 
-    # LOAD MODEL
-    path = os.getcwd()
-    model = models.resnet152(pretrained=False)
-    model_path = os.path.join(path, 'app', 'models', 'stage-2-resnet152.pth')
-    model.load_state_dict(torch.load(model_path, map_location=torch.device('cpu')), strict=False)
-    model.eval()
+    # PREDICT ARCHITECTURAL CLASSIFICATION OF IMAGE 
+    prediction, pred_idx, pred_tensor = learn.predict(img)
+    p = pred_tensor[pred_idx].item()
+    print(f"Softmax score for the predicted class {prediction}: {p}")
 
     # UPDATE IMAGE FORMAT
-    img = load_image_not_path(img)
+    # Commomn transformation for passing image into Grad-CAM 
+    transform = transforms.Compose([
+        transforms.Resize((224, 224)),
+        transforms.ToTensor(),
+        transforms.Normalize(mean=[0.485, 0.456, 0.406],
+                            std=[0.229, 0.224, 0.225]),
+    ])
 
-    # PREDICT
-    output = model(img)
-    _, pred_class = output.max(dim=1)
-    pred_class = pred_class.item()
+    img = img.convert('RGB')
+    img = transform(img).unsqueeze(0)
 
     # GRADCAM
-    target_layer = model.layer4[2].conv3 
+    #target_layer = model.layer4[2].conv3 # Last layer, use if model has name attributes (layer4)
+    target_layer = model[0][7][2].conv3 # Last layer, use if model does not have name attributes (layer4) and just sequential blocks
     grad_cam = GradCAM(model, target_layer)
-    heatmap = grad_cam(img, pred_class)
+    # last_layer = "layer4.3.conv3" # Last layer, use if model has name attributes (layer4)
+    last_layer = "0.7.2.conv3" # Last layer, use if model does not have name attributes (layer4) and just sequential blocks
+    heatmap = grad_cam(img, pred_idx.item(), last_layer)
+    heatmap = heatmap.squeeze()
 
-    # HEATMAP
-    overlayed_img = overlay_heatmap_not_path(heatmap, img)
+    # HEATMAP OVERLAY
+    overlayed_img = overlay_heatmap(heatmap, img)
     overlayed_img_pil = Image.fromarray(overlayed_img)
-
     buffer = BytesIO()
     overlayed_img_pil.save(buffer, format="JPEG") 
     img_base64 = base64.b64encode(buffer.getvalue()).decode('utf-8')
