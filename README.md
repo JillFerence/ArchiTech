@@ -1,27 +1,17 @@
-# ArchiTech
-**ArchiTech** is a grad-CAM based architectural style classification model. 
+# ArchiTech - International Architectural Style Classification with Grad-CAM
+**ArchiTech** is an image classifier of 45 different architectural styles that implements Grad-CAM. 
 
-Made with [fastai](https://www.fast.ai) library.
-Source code on [src](./src/architectural-style-recognition.ipynb). It can be runned in [Google Colab](colab.research.google.com)
-
-![Deconstructivism](./images/test1.gif)
-
-
+https://github.com/user-attachments/assets/bc475ed8-51fe-474b-8a74-9840dbe4e908
 
 ## Table of content
-- [ArchiTech](#architech)
-  - [Table of content](#table-of-content)
-  - [Dataset](#dataset)
-      - [Data augmentation](#data-augmentation)
-  - [Training](#training)
-      - [Training vs Test sets](#training-vs-test-sets)
-  - [Results](#results)
-  - [Demonstration](#demonstration)
-  - [Deployment](#deployment)
-    - [Run the app locally](#run-the-app-locally)
-  - [License](#license)
-  - [Links](#links)
-  - [Authors](#authors)
+- [Dataset](#dataset)
+- [Training](#training)
+- [Results](#results)
+- [Demonstration](#demonstration)
+- [Deployment](#deployment)
+- [License](#license)
+- [Links](#links)
+- [Authors](#authors)
 
 
 
@@ -115,49 +105,66 @@ In this case we go from 4979 to 9588 images.
 
 ## Training
 
-#### Training vs Test sets
-
-The dataset is splitted in two:
-  * training set (80%)
-  * test set (20%)
+The dataset is split in two:
+  * Training set (80%)
+  * Test set (20%)
 
 
 
 ## Results
-We got a **95%** of accuracy on this dataset
+We got a **77%** accuracy on the International Architectural Styles Dataset.
 
-![Accuracy results](./images/results.jpg)
+![Results](https://github.com/user-attachments/assets/4e9520a2-8737-4fe4-bd39-ec870c31e549)
 
+#### Grad-CAM Results
 
+![image](https://github.com/user-attachments/assets/841cb9d0-e60e-4660-8406-911242e2474a)
+
+![image](https://github.com/user-attachments/assets/f13834d5-263b-493a-b917-158fd9b4304d)
+
+![image](https://github.com/user-attachments/assets/6e7ba244-5e60-425c-bd00-546eece9e7f0)
 
 ## Demonstration
 
 <details><summary><b>More examples</b></summary>
 
-**Greek Revival:**
-
-![Greek Revival](./images/test2.gif)
-
-
-**Byzantine:**
-
-![Byzantine](./images/test3.gif)
-
-
 **Gothic:**
 
-![Gothic](./images/test4.gif)
+https://github.com/user-attachments/assets/35a1a680-2fb1-42cf-b7b0-b2319a0bf3d2
 
+**Edo Period:**
 
-**Bauhaus:**
+https://github.com/user-attachments/assets/ed496bd1-15e6-4a54-a814-e5eac1bd05ab
 
-![Bauhaus](./images/test5.gif)
+**Minangkabau:**
+
+https://github.com/user-attachments/assets/7758aa80-1a87-4ea7-bb04-a3be7521cc15
+
+**Balinese:**
+
+https://github.com/user-attachments/assets/bec850e6-ad05-4622-a8c0-ad798eb2e010
+
+**Khmer:**
+
+https://github.com/user-attachments/assets/078fef4d-6b11-47a9-bb49-6c1249200ee8
+
+**Maya:**
+
+https://github.com/user-attachments/assets/d2079bfc-65da-4e36-9963-018b504e4891
+
+**Swahili:**
+
+https://github.com/user-attachments/assets/fd298a55-e433-453f-971f-8c163cadc4f2
+
 
 </details>
 
 
 
 ## Deployment
+
+Made with [fastai](https://www.fast.ai) library.
+Source code on [src](./src/architectural-style-recognition.ipynb). It can be run in [Google Colab](colab.research.google.com)
 
 The [app](./app) folder contains the application ready to deploy on [Render](https://render.com).
 
@@ -176,10 +183,6 @@ Or in python3:
     python3 app/server.py serve
 
 
-*Note: it has been only tested in Linux.*
-
-
-
 ## License
 
 MIT License
@@ -192,7 +195,8 @@ MIT License
 * [Render](https://render.com)
 * [Google Colab](colab.research.google.com)
 
-
+## Acknowledgements
+For this project, we built upon [Marian-Dumitru Danci](https://github.com/dumitrux/architectural-style-recognition)’s model with our implementation of ResNet152. We also built upon [Kazuto Nakashima](https://github.com/kazuto1011/grad-cam-pytorch?tab=readme-ov-file##references)’s Grad-CAM for ResNet152 with our implementation of Grad-CAM. The dataset that we used to train our model is a combination of our original dataset and the works of [Danci](https://www.kaggle.com/datasets/dumitrux/architectural-styles-dataset) and [Xu et al.](https://doi.org/10.1007/978-3-319-10590-1_39), which altogether contain 45 classes and 14,833 images of buildings. 
 
 ## Authors
 - Jung, Seolin ([@seolinjung](https://github.com/seolinjung))
